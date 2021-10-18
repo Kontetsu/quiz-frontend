@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {DataService} from '../data.service';
 import {CategoryDto} from '../dtos/category.dto';
@@ -22,6 +23,7 @@ export class SelectComponent implements OnInit {
 
   constructor(private dataService: DataService,
               private formBuilder: FormBuilder,
+              private router: Router,
               ) { }
 
   ngOnInit(): void {
@@ -44,8 +46,13 @@ export class SelectComponent implements OnInit {
             console.log("Start game response: ", resp);
             if (resp.status == 201) {
                 console.log("Start game response as expected, moving to actual game...")
+                this.goToGame();
             }
         })
   }
+
+    goToGame() {
+        this.router.navigate(['/game'])
+    }
 
 }
