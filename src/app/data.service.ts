@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {Observable} from 'rxjs/internal/Observable';
 import {GameOptionsDto} from './dtos/gameOptions.dto';
+import {UserAnswerDto} from './dtos/userAnswer.dto';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
-    private REST_API_SERVER = window.origin + "/api/quiz";
+    private REST_API_SERVER = "http://localhost:8080/api/quiz";
 
     constructor(private httpClient: HttpClient) { }
 
@@ -19,7 +19,15 @@ export class DataService {
         return this.httpClient.get(this.REST_API_SERVER + "/categories");
     }
 
-    sendPostStartGameRequest(dto: GameOptionsDto) {
+    public sendPostStartGameRequest(dto: GameOptionsDto) {
         return this.httpClient.post(this.REST_API_SERVER + "/startGame", dto, {observe: 'response'});
+    }
+
+    public sendGetGameState() {
+        return this.httpClient.get(this.REST_API_SERVER + "/gameState");
+    }
+
+    public sendPostUserAnswerRequest(dto: UserAnswerDto) {
+        return this.httpClient.post(this.REST_API_SERVER + "/submitAnswer", dto, {observe: 'response'});
     }
 }
